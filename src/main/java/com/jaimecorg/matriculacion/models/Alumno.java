@@ -1,10 +1,13 @@
 package com.jaimecorg.matriculacion.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Alumno {
@@ -18,10 +21,23 @@ public class Alumno {
     private Date fecha_nacimiento;
     private int telefono;
     
-    public Alumno() {
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Asignatura> asignaturas;
+    
+    public Alumno(int codigo) {
+        this.id = codigo;
     }
-    public Alumno(int id) {
+
+    public Alumno(int id, String nombre, String apellidos, String email, Date fechaNacimiento, int telefono) {
         this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.fecha_nacimiento = fechaNacimiento;
+        this.telefono = telefono;
+    }
+
+    public Alumno() {
     }
     public int getId() {
         return id;
@@ -58,6 +74,12 @@ public class Alumno {
     }
     public void setTelefono(int telefono) {
         this.telefono = telefono;
+    }
+    public List<Asignatura> getAsignaturas() {
+        return asignaturas;
+    }
+    public void setAsignaturas(List<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
     
     @Override

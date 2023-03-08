@@ -1,23 +1,32 @@
 package com.jaimecorg.matriculacion.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Asignatura {
-
-    @Id
-    @GeneratedValue
-    private int id;
     
-    private String codigo;
+    @Id
+    private int id;
+
     private String descripcion;
 
-    public Asignatura() {
-    }
-    public Asignatura(int id) {
+    @ManyToMany(mappedBy = "asignaturas")
+    private List<Alumno> alumnos;
+
+    @Transient
+    private boolean tieneAsignatura;
+
+    public Asignatura(int id, String descripcion) {
         this.id = id;
+        this.descripcion = descripcion;
+    }
+
+    public Asignatura() {
     }
 
     public int getId() {
@@ -26,19 +35,25 @@ public class Asignatura {
     public void setId(int id) {
         this.id = id;
     }
-    public String getCodigo() {
-        return codigo;
-    }
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
     public String getDescripcion() {
         return descripcion;
     }
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+    public List<Alumno> getAlumnos() {
+        return alumnos;
+    }
+    public void setAlumnos(List<Alumno> alumnos) {
+        this.alumnos = alumnos;
+    }
+    public boolean isTieneAsignatura() {
+        return tieneAsignatura;
+    }
+    public void setTieneAsignatura(boolean tieneAsignatura) {
+        this.tieneAsignatura = tieneAsignatura;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -46,6 +61,7 @@ public class Asignatura {
         result = prime * result + id;
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -58,7 +74,5 @@ public class Asignatura {
         if (id != other.id)
             return false;
         return true;
-    }
-
-    
+    }    
 }
